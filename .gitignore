@@ -1,0 +1,43 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+combined.log
+
+# Environment variables
+.env
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# TypeScript build output
+dist/
+build/
+
+# Compiled TypeScript
+*.tsbuildinfo
+
+# Coverage directory
+coverage/
+
+# VSCode settings
+.vscode/
+
+# Jest cache
+jest-cache/
+jest.config.js
+
+# Docker files (optional - only if generated during runtime)
+docker-compose.override.yml
+
+# Lint cache
+.eslintcache
+
+# Debug
+debug.log
