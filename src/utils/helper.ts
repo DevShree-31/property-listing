@@ -12,7 +12,7 @@ export class ApiError extends Error {
   }
 }
 
-export const sendSuccess = (res: Response, message: string, data?: any, statusCode: number = 200) => {
+export const sendSuccess = (res: Response, message: string, statusCode: number = 200, data?: any) => {
   return res.status(statusCode).json({
     success: true,
     message,
@@ -20,7 +20,7 @@ export const sendSuccess = (res: Response, message: string, data?: any, statusCo
   });
 };
 
-export const sendError = (res: Response, message: string, statusCode: number = 500, errors?: string[]) => {
+export const sendError = (res: Response, message: string, statusCode: number = 500, errors?: any) => {
   return res.status(statusCode).json({
     success: false,
     message,

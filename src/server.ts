@@ -11,6 +11,7 @@ import { logger } from './utils/logger';
 import { connectDatabase } from './config/database';
 import { connectRedis } from './config/redis';
 import { StatusCodes } from 'http-status-codes';
+import  authRoutes from "./v1/routes/auth.route"
 dotenv.config();
 
 const app=express()
@@ -45,6 +46,7 @@ app.get('/health',(req,res)=>{
     })
 })
 
+app.use('/api/v1/auth', authRoutes)
 
 async function startServer() {
   try {

@@ -1,6 +1,7 @@
+import { configDotenv } from 'dotenv';
 import swaggerJsdoc from 'swagger-jsdoc';
-
-const options = {
+configDotenv();
+export const options = {
   definition: {
     openapi: '3.0.0',
     info: {
@@ -34,7 +35,10 @@ const options = {
       schemas: {
         Property: {
           type: 'object',
-          required: ['title', 'type', 'price', 'state', 'city', 'areaSqFt', 'bedrooms', 'bathrooms', 'furnished', 'availableFrom', 'listedBy', 'listingType'],
+          required: [
+            'title', 'type', 'price', 'state', 'city', 'areaSqFt',
+            'bedrooms', 'bathrooms', 'furnished', 'availableFrom', 'listedBy', 'listingType'
+          ],
           properties: {
             _id: { type: 'string', example: 'PROP001' },
             title: { type: 'string', example: 'Beautiful 3BHK Apartment' },
@@ -57,6 +61,15 @@ const options = {
             createdBy: { type: 'string', example: '507f1f77bcf86cd799439011' }
           }
         },
+        Login:{
+          type: 'object',
+          required: ['name', 'email', 'password'],
+          properties: {
+            name: { type: 'string', example: 'John Doe' },
+            email: { type: 'string', format: 'email', example: 'john@example.com' },
+            password:{type:'string',example:"Admin@123"}
+        },
+      },
         User: {
           type: 'object',
           required: ['name', 'email', 'password'],
@@ -102,7 +115,7 @@ const options = {
       }
     ]
   },
-  apis: ['./src/routes/*.ts'], // Path to the API docs
+  apis: ['src/v1/routes/*.ts'], // Corrected path to the API docs from src/config/swagger.ts
 };
 
 export const swaggerSpec = swaggerJsdoc(options);
