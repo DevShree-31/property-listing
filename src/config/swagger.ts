@@ -33,6 +33,40 @@ export const options = {
         }
       },
       schemas: {
+        CreateProperty: {
+          type: 'object',
+          required: [
+            'title', 'type', 'price', 'state', 'city', 'areaSqFt',
+            'bedrooms', 'bathrooms', 'furnished', 'availableFrom', 'listedBy', 'listingType'
+          ],
+          properties: {
+            title: { type: 'string', example: 'Beautiful 3BHK Apartment' },
+            type: { type: 'string', enum: ['Apartment', 'Bungalow', 'Villa'], example: 'Apartment' },
+            price: { type: 'number', example: 2500000 },
+            state: { type: 'string', example: 'Maharashtra' },
+            city: { type: 'string', example: 'Mumbai' },
+            areaSqFt: { type: 'number', example: 1200 },
+            bedrooms: { type: 'number', example: 3 },
+            bathrooms: { type: 'number', example: 2 },
+            amenities: {
+              type: 'array',
+              items: { type: 'string' },
+              example: ['Parking', 'Gym', 'Swimming Pool']
+            },
+            furnished: { type: 'string', enum: ['Furnished', 'Unfurnished', 'Semi'], example: 'Furnished' },
+            availableFrom: { type: 'string', format: 'date', example: '2024-01-15' },
+            listedBy: { type: 'string', enum: ['Builder', 'Owner', 'Agent'], example: 'Owner' },
+            tags: {
+              type: 'array',
+              items: { type: 'string' },
+              example: ['luxury', 'new', 'prime-location']
+            },
+            colorTheme: { type: 'string', example: '#FF5733' },
+            rating: { type: 'number', minimum: 0, maximum: 5, example: 4.5 },
+            isVerified: { type: 'boolean', example: true },
+            listingType: { type: 'string', enum: ['Sale', 'Rent'], example: 'Sale' }
+          }
+        },
         Property: {
           type: 'object',
           required: [
@@ -61,23 +95,23 @@ export const options = {
             createdBy: { type: 'string', example: '507f1f77bcf86cd799439011' }
           }
         },
-        Register:{
+        Register: {
           type: 'object',
           required: ['name', 'email', 'password'],
           properties: {
             name: { type: 'string', example: 'John Doe' },
             email: { type: 'string', format: 'email', example: 'john@example.com' },
-            password:{type:'string',example:"Admin@123"}
-        }
-      },
-        Login:{
-            type: 'object',
-          required: [ 'email', 'password'],
+            password: { type: 'string', example: "Admin@123" }
+          }
+        },
+        Login: {
+          type: 'object',
+          required: ['email', 'password'],
           properties: {
             email: { type: 'string', format: 'email', example: 'john@example.com' },
-            password:{type:'string',example:"Admin@123"}
-        }
-      },
+            password: { type: 'string', example: "Admin@123" }
+          }
+        },
         User: {
           type: 'object',
           required: ['name', 'email', 'password'],

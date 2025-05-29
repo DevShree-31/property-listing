@@ -48,7 +48,6 @@ export interface IProperty extends Document {
 }
 
 const PropertySchema = new Schema<IProperty>({
-  _id: { type: String, required: true },
   title: { type: String, required: true, trim: true },
   type: { type: String, required: true, enum: PropertyType },
   price: { type: Number, required: true, min: 0 },
