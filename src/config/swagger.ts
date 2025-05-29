@@ -61,14 +61,22 @@ export const options = {
             createdBy: { type: 'string', example: '507f1f77bcf86cd799439011' }
           }
         },
-        Login:{
+        Register:{
           type: 'object',
           required: ['name', 'email', 'password'],
           properties: {
             name: { type: 'string', example: 'John Doe' },
             email: { type: 'string', format: 'email', example: 'john@example.com' },
             password:{type:'string',example:"Admin@123"}
-        },
+        }
+      },
+        Login:{
+            type: 'object',
+          required: [ 'email', 'password'],
+          properties: {
+            email: { type: 'string', format: 'email', example: 'john@example.com' },
+            password:{type:'string',example:"Admin@123"}
+        }
       },
         User: {
           type: 'object',
