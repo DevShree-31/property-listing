@@ -1,6 +1,7 @@
 import { configDotenv } from 'dotenv';
 import swaggerJsdoc from 'swagger-jsdoc';
 configDotenv();
+
 export const options = {
   definition: {
     openapi: '3.0.0',
@@ -66,6 +67,32 @@ export const options = {
             isVerified: { type: 'boolean', example: true },
             listingType: { type: 'string', enum: ['Sale', 'Rent'], example: 'Sale' }
           }
+        },
+        UpdateProperty: {
+          type: 'object',
+          properties: {
+            title: { type: 'string', example: 'Updated Beautiful 3BHK Apartment' },
+            price: { type: 'number', example: 2800000 },
+            amenities: {
+              type: 'array',
+              items: { type: 'string' },
+              example: ['Parking', 'Gym', 'Swimming Pool', 'Security']
+            },
+            furnished: { type: 'string', enum: ['Furnished', 'Unfurnished', 'Semi'], example: 'Semi' },
+            availableFrom: { type: 'string', format: 'date', example: '2024-02-01' },
+            tags: {
+              type: 'array',
+              items: { type: 'string' },
+              example: ['luxury', 'updated', 'prime-location']
+            },
+            colorTheme: { type: 'string', example: '#33A1FF' },
+            rating: { type: 'number', minimum: 0, maximum: 5, example: 4.8 },
+            isVerified: { type: 'boolean', example: true },
+            listingType: { type: 'string', enum: ['Sale', 'Rent'], example: 'Rent' }
+          },
+          additionalProperties: false,
+          minProperties: 1,
+          description: 'At least one field must be provided for update'
         },
         Property: {
           type: 'object',

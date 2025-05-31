@@ -28,3 +28,20 @@ export const createPropertySchema = Joi.object({
     .valid(...Object.values(ListingType))
     .required()
 });
+
+export const updatePropertySchema = Joi.object({
+  title: Joi.string().trim().optional(),
+  price: Joi.number().min(0).optional(),
+  amenities: Joi.array().items(Joi.string().trim()).optional(),
+  furnished: Joi.string()
+    .valid(...Object.values(Furnishing))
+    .optional(),
+  availableFrom: Joi.date().optional(),
+  tags: Joi.array().items(Joi.string().trim()).optional(),
+  colorTheme: Joi.string().trim().optional(),
+  rating: Joi.number().min(0).max(5).optional(),
+  isVerified: Joi.boolean().optional(),
+  listingType: Joi.string()
+    .valid(...Object.values(ListingType))
+    .optional()
+}).min(1); // Ensures at least one field is provided for update

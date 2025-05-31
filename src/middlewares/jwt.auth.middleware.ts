@@ -4,6 +4,8 @@ import { StatusCodes } from "http-status-codes";
 import jwt from 'jsonwebtoken'
 import { IUser, UserModel } from "../v1/models/user.model";
 import { AuthRequest } from "../types/auth/authTypes";
+import mongoose from "mongoose";
+import { PropertyModel } from "../v1/models/property.model";
 
 export async function jwtAuthMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
     const authHeader = req.headers["authorization"];
@@ -26,5 +28,20 @@ export async function jwtAuthMiddleware(req: AuthRequest, res: Response, next: N
         next()
     } catch (error) {
         return sendError(res, "Invalid or expired token", StatusCodes.FORBIDDEN)
+    }
+}
+
+export async function permissionMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+        const { _id } = req.user
+        const propertyId = new mongoose.Types.ObjectId(req.params.id)
+
+        const property = await PropertyModel.findById({ _id: propertyId })
+        if (property.createdBy.toString() != _id.toString()) {
+            return sendError(res, "Permission denied", StatusCodes.UNAUTHORIZED)
+        }
+        next()
+    } catch (error) {
+        return sendError(res, "Error occured while verifying the permission", StatusCodes.INTERNAL_SERVER_ERROR, error.message)
     }
 }
