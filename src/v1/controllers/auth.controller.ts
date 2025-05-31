@@ -19,7 +19,7 @@ export async function registerUser(req: Request, res: Response) {
         return sendSuccess(res, "User created successfully", StatusCodes.OK, {
             user: createdUser
         })
-    } catch (error) {
+    } catch (error:any) {
         logger.error(error.message)
         return sendError(res, "Error occured while registering a user", StatusCodes.INTERNAL_SERVER_ERROR)
     }
@@ -40,7 +40,7 @@ export async function loginUser(req: Request, res: Response) {
         if (!isMatch) {
             return sendError(res, "Password does not match", StatusCodes.UNAUTHORIZED)
         }
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
             expiresIn: '1h'
         });
         return sendSuccess(res, "User Logged in successfully",StatusCodes.OK,{

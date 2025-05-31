@@ -8,7 +8,7 @@ import { PropertyModel } from "../models/property.model";
 import mongoose from "mongoose";
 import redis from "../../config/redis";
 
-async function sendRecommendation(req: AuthRequest, res: Response) {
+async function sendRecommendation(req: any, res: Response) {
     try {
         const id = req.user._id
         const { to, message, propertyId: propertyIdStr } = req.body
@@ -40,12 +40,12 @@ async function sendRecommendation(req: AuthRequest, res: Response) {
         await recommendation.populate([{ path: 'from' }, { path: 'to' }, { path: 'propertyId' }]);
         await redis.del(`receivedRecommendations:${recommendedTo._id.toString()}`);
         return sendSuccess(res, "Property recommended successfully", StatusCodes.CREATED, { recommendation })
-    } catch (error) {
+    } catch (error:any) {
         return sendError(res, "Error while sending recommendation", StatusCodes.INTERNAL_SERVER_ERROR, error.message)
     }
 }
 
-async function receivedRecommedations(req: AuthRequest, res: Response) {
+async function receivedRecommedations(req: any, res: Response) {
     try {
         const id = req.user._id
         const receivedRecommendations = await RecommendationModel.find({ to: id })
@@ -58,7 +58,7 @@ async function receivedRecommedations(req: AuthRequest, res: Response) {
             return sendSuccess(res, "Successfully retrieved all property recommendations (from cache)", StatusCodes.OK, parsedData);
         }
         return sendSuccess(res, "Successfully retrieved all property recommendations", StatusCodes.OK, receivedRecommendations);
-    } catch (error) {
+    } catch (error:any) {
         return sendError(res, "Error while retrieving recommendations", StatusCodes.INTERNAL_SERVER_ERROR, error.message)
     }
 }

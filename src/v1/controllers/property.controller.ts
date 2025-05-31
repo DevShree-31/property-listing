@@ -7,7 +7,7 @@ import { IProperty, PropertyModel } from "../models/property.model";
 import { logger } from "../../utils/logger";
 import mongoose from "mongoose";
 import { PropertyFilters } from "../../types/auth/property";
-async function createProperty(req: AuthRequest, res: Response) {
+async function createProperty(req: any, res: Response) {
     try {
         console.log("Entered create property function")
         const { _id } = req.user
@@ -21,12 +21,12 @@ async function createProperty(req: AuthRequest, res: Response) {
         const property: IProperty = await PropertyModel.create({ ...propertyDetails, createdBy: user._id })
         console.log(property)
         return sendSuccess(res, "Property Created Successfully", StatusCodes.CREATED, property)
-    } catch (error) {
+    } catch (error:any) {
         logger.error(`${error}`)
         return sendError(res, "Error occured while creating property", StatusCodes.INTERNAL_SERVER_ERROR, error.message)
     }
 }
-async function getProperties(req: AuthRequest, res: Response): Promise<void> {
+async function getProperties(req: any, res: Response): Promise<void> {
   try {
     const {
       city,
@@ -170,7 +170,7 @@ async function getProperties(req: AuthRequest, res: Response): Promise<void> {
     });
   }
 }
-async function getPropertyById(req: AuthRequest, res: Response) {
+async function getPropertyById(req: any, res: Response) {
     try {
         const id = new mongoose.Types.ObjectId(req.params.id);
         const property = await PropertyModel.findById({ _id: id })
@@ -179,13 +179,13 @@ async function getPropertyById(req: AuthRequest, res: Response) {
         }
 
         return sendSuccess(res, "Property with the given id retrieved successfully", StatusCodes.OK, property)
-    } catch (error) {
+    } catch (error:any) {
         return sendError(res, "Error occured while retrieving the property", StatusCodes.INTERNAL_SERVER_ERROR, error.message)
     }
 
 }
 
-async function updatePropertyById(req: AuthRequest, res: Response) {
+async function updatePropertyById(req: any, res: Response) {
     try {
         const id = new mongoose.Types.ObjectId(req.params.id);
         const updatePayload = req.body;
@@ -206,13 +206,13 @@ async function updatePropertyById(req: AuthRequest, res: Response) {
             StatusCodes.OK,
             property
         );
-    } catch (error) {
+    } catch (error:any) {
         console.error(error);
         return sendError(res, "Internal server error", StatusCodes.INTERNAL_SERVER_ERROR,error.message);
     }
 }
 
-async function deletePropertyById(req: AuthRequest, res: Response) {
+async function deletePropertyById(req: any, res: Response) {
   try {
     const id = new mongoose.Types.ObjectId(req.params.id);
 
@@ -223,7 +223,7 @@ async function deletePropertyById(req: AuthRequest, res: Response) {
     }
 
     return sendSuccess(res, "Property deleted successfully", StatusCodes.OK);
-  } catch (error) {
+  } catch (error:any) {
     console.error(error);
     return sendError(res, "Internal server error", StatusCodes.INTERNAL_SERVER_ERROR,error.message);
   }

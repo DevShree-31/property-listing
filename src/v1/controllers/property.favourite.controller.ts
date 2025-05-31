@@ -9,7 +9,7 @@ import redis from "../../config/redis";
 
 const FAVORITES_CACHE_KEY = (userId: string) => `favorites:user:${userId}`;
 
-async function addToFavorites(req: AuthRequest, res: Response) {
+async function addToFavorites(req: any, res: Response) {
   const userId = req.user._id;
   const propertyId = new mongoose.Types.ObjectId(req.params.id);
 
@@ -33,7 +33,7 @@ async function addToFavorites(req: AuthRequest, res: Response) {
       StatusCodes.OK,
       { favourites: user?.favorites }
     );
-  } catch (err) {
+  } catch (err:any) {
     return sendError(
       res,
       "Error occured while adding property to favourite",
@@ -43,7 +43,7 @@ async function addToFavorites(req: AuthRequest, res: Response) {
   }
 }
 
-async function removeFromFavorites(req: AuthRequest, res: Response) {
+async function removeFromFavorites(req: any, res: Response) {
   const userId = req.user._id;
   const propertyId = new mongoose.Types.ObjectId(req.params.id);
 
@@ -61,7 +61,7 @@ async function removeFromFavorites(req: AuthRequest, res: Response) {
       "Property removed from favourite successfully",
       StatusCodes.OK
     );
-  } catch (err) {
+  } catch (err:any) {
     return sendError(
       res,
       "Error occured while removing property from favourite",
@@ -71,7 +71,7 @@ async function removeFromFavorites(req: AuthRequest, res: Response) {
   }
 }
 
-async function getFavoriteProperties(req: AuthRequest, res: Response) {
+async function getFavoriteProperties(req: any, res: Response) {
   const userId = req.user._id.toString();
 
   try {
@@ -105,7 +105,7 @@ async function getFavoriteProperties(req: AuthRequest, res: Response) {
       StatusCodes.OK,
       { favorites }
     );
-  } catch (err) {
+  } catch (err:any) {
     return sendError(
       res,
       "Error occurred while retrieving all the favourites for user",
