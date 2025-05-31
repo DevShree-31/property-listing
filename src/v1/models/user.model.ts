@@ -35,8 +35,7 @@ const UserSchema = new Schema<IUser>({
     required: true,
     minlength: 6
   },
-  favorites: [{ type: Schema.Types.ObjectId, ref: 'Property' }],
-  recommendationsReceived: [RecommendationSchema]
+  favorites: [{ type: Schema.Types.ObjectId, ref: 'Property' }]
 }, { 
   timestamps: true,
   toJSON: { 

@@ -94,6 +94,27 @@ export const options = {
           minProperties: 1,
           description: 'At least one field must be provided for update'
         },
+        Recommendation: {
+          type: 'object',
+          required: ['to', 'propertyId'],
+          properties: {
+            _id: { type: 'string', example: '607f1f77bcf86cd799439011' },
+            from: { type: 'string', format: 'ObjectId', example: '507f1f77bcf86cd799439012', description: 'User ID who recommends (from auth token)' },
+            to: { type: 'string', format: 'ObjectId', example: '507f1f77bcf86cd799439013', description: 'User ID who receives the recommendation' },
+            propertyId: { type: 'string', format: 'ObjectId', example: '607f1f77bcf86cd799439014', description: 'Property being recommended' },
+            recommendatedAt: { type: 'string', format: 'date-time', example: '2024-05-31T10:00:00Z' },
+            message: { type: 'string', maxLength: 500, example: 'Check out this great property!' }
+          }
+        },
+        sendRecommendation: {
+          type: 'object',
+          required: ['to', 'propertyId'],
+          properties: {
+            to: { type: 'string', format: 'email', example: 'patelshre9999@gmail.com', description: 'Email who receives the recommendation' },
+            propertyId: { type: 'string', format: 'ObjectId', example: '607f1f77bcf86cd799439014', description: 'Property being recommended' },
+            message: { type: 'string', maxLength: 500, example: 'Check out this great property!' }
+          }
+        },
         Property: {
           type: 'object',
           required: [
@@ -147,17 +168,6 @@ export const options = {
             name: { type: 'string', example: 'John Doe' },
             email: { type: 'string', format: 'email', example: 'john@example.com' },
             favorites: { type: 'array', items: { type: 'string' }, example: ['PROP001', 'PROP002'] },
-            recommendationsReceived: {
-              type: 'array',
-              items: {
-                type: 'object',
-                properties: {
-                  from: { type: 'string', example: '507f1f77bcf86cd799439012' },
-                  propertyId: { type: 'string', example: 'PROP001' },
-                  recommendedAt: { type: 'string', format: 'date-time' }
-                }
-              }
-            }
           }
         },
         Error: {

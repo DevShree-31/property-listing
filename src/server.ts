@@ -14,6 +14,7 @@ import { StatusCodes } from 'http-status-codes';
 import  authRoutes from "./v1/routes/auth.route"
 import propertyRoutes from './v1/routes/property.route'
 import favoriteRoutes from './v1/routes/property-favourite.route'
+import recommendationRoute from './v1/routes/recommendation.route'
 dotenv.config();
 
 const app=express()
@@ -51,6 +52,7 @@ app.get('/health',(req,res)=>{
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/property',propertyRoutes)
 app.use('/api/v1/favorite',favoriteRoutes)
+app.use('/api/v1/recommendations',recommendationRoute)
 async function startServer() {
   try {
     await connectDatabase();
