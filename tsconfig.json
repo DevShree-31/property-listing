@@ -1,7 +1,16 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
-  }
+    "target": "ES2022",            // target modern JavaScript version
+   "module": "commonjs",          
+    "moduleResolution": "node",   // resolve modules like Node.js does
+    "esModuleInterop": true,       // enables compatibility for CommonJS imports
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
 }
-// This file is used to configure TypeScript for the server-side code.
