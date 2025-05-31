@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import redis from '../config/redis';
 
 export class ApiError extends Error {
   public statusCode: number;
@@ -27,3 +28,4 @@ export const sendError = (res: Response, message: string, statusCode: number = 5
     ...(errors && { errors })
   });
 };
+

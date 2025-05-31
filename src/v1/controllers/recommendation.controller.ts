@@ -6,6 +6,7 @@ import { sendError, sendSuccess } from "../../utils/helper";
 import { StatusCodes } from "http-status-codes";
 import { PropertyModel } from "../models/property.model";
 import mongoose from "mongoose";
+import redis from "../../config/redis";
 
 async function sendRecommendation(req: AuthRequest, res: Response) {
     try {
@@ -37,7 +38,7 @@ async function sendRecommendation(req: AuthRequest, res: Response) {
         })
         await recommendation.save();
         await recommendation.populate([{ path: 'from' }, { path: 'to' }, { path: 'propertyId' }]);
-
+        await redis.del(`receivedRecommendations:${recommendedTo._id.toString()}`);
         return sendSuccess(res, "Property recommended successfully", StatusCodes.CREATED, { recommendation })
     } catch (error) {
         return sendError(res, "Error while sending recommendation", StatusCodes.INTERNAL_SERVER_ERROR, error.message)
@@ -46,14 +47,19 @@ async function sendRecommendation(req: AuthRequest, res: Response) {
 
 async function receivedRecommedations(req: AuthRequest, res: Response) {
     try {
-        const id=req.user._id
+        const id = req.user._id
         const receivedRecommendations = await RecommendationModel.find({ to: id })
             .populate({ path: 'propertyId' })
             .populate({ path: 'from' });
-    
-    return sendSuccess(res, "Successfully retrieved all property recommendations",StatusCodes.OK,receivedRecommendations);
+        const cacheKey = `receivedRecommendations:${id.toString()}`;
+        const cachedData = await redis.get(cacheKey);
+        if (cachedData) {
+            const parsedData = JSON.parse(cachedData);
+            return sendSuccess(res, "Successfully retrieved all property recommendations (from cache)", StatusCodes.OK, parsedData);
+        }
+        return sendSuccess(res, "Successfully retrieved all property recommendations", StatusCodes.OK, receivedRecommendations);
     } catch (error) {
         return sendError(res, "Error while retrieving recommendations", StatusCodes.INTERNAL_SERVER_ERROR, error.message)
     }
 }
-export { sendRecommendation,receivedRecommedations }
+export { sendRecommendation, receivedRecommedations }
