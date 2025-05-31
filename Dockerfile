@@ -1,5 +1,5 @@
 # Use node official image
-FROM node:18-alpine
+FROM node:22
 
 # Set working directory
 WORKDIR /app
@@ -18,4 +18,4 @@ RUN npm run build
 EXPOSE 5000
 
 # Start the app from the compiled JS
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/server.js"]
