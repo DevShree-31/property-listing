@@ -13,6 +13,7 @@ import { connectRedis } from './config/redis';
 import { StatusCodes } from 'http-status-codes';
 import  authRoutes from "./v1/routes/auth.route"
 import propertyRoutes from './v1/routes/property.route'
+import favoriteRoutes from './v1/routes/property-favourite.route'
 dotenv.config();
 
 const app=express()
@@ -49,6 +50,7 @@ app.get('/health',(req,res)=>{
 
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/property',propertyRoutes)
+app.use('/api/v1/favorite',favoriteRoutes)
 async function startServer() {
   try {
     await connectDatabase();

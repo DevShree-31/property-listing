@@ -347,6 +347,6 @@ router.patch('/:id', jwtAuthMiddleware, validateUpdateProperty, permissionMiddle
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', jwtAuthMiddleware, permissionMiddleware, deletePropertyById);
+router.delete('/:id', jwtAuthMiddleware, permissionMiddleware, deletePropertyById,getProperties);
 
 export default router;
