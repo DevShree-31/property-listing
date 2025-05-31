@@ -3,7 +3,11 @@ import { logger } from '../utils/logger';
 
 export const connectDatabase = async (): Promise<void> => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    const dbUri = process.env.MONGODB_URI;
+    if (!dbUri) {
+      throw new Error('MONGODB_URI is not defined in environment variables');
+    }
+    await mongoose.connect(dbUri);
     
     logger.info('MongoDB connected successfully');
 
